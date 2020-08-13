@@ -1,0 +1,144 @@
+<!doctype html> <html lang="en" class="no-js"> <!-- Content Copyright National Park Service -->
+<!-- JavaScript & DHTML Code Copyright &copy; 1998-2017, PaperThin, Inc. All Rights Reserved. --> <head>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"> 
+<title>Authorized Concessioners Search - Concessions (U.S. National Park Service)</title> <script>
+var jsDlgLoader = 'https://www.nps.gov/subjects/concessions/loader.cfm';
+var jsSiteResourceLoader = 'https://www.nps.gov/cs-resources.cfm?r=';
+var jsSiteResourceSettings = {canCombine: false, canMinify: false};
+</script>
+<!-- beg (1) PrimaryResources -->
+<script type="text/javascript" src="https://www.nps.gov/ADF/thirdParty/jquery/jquery-1.12.js"></script><script type="text/javascript" src="https://www.nps.gov/commonspot/javascript/browser-all.js"></script>
+<!-- end (1) PrimaryResources -->
+<!-- beg (2) SecondaryResources -->
+<!-- end (2) SecondaryResources -->
+<!-- beg (3) StyleTags -->
+<!-- end (3) StyleTags -->
+<!-- beg (4) JavaScript -->
+<script type="text/javascript">
+<!--
+var gMenuControlID = 0;
+var menus_included = 0;
+var jsSiteID = 1;
+var jsSubSiteID = 30847;
+var js_gvPageID = 5866343;
+var jsPageID = 5866343;
+var jsPageSetID = 0;
+var jsPageType = 0;
+var jsSiteSecurityCreateControls = 0;
+var jsShowRejectForApprover = 1;
+// -->
+</script><script>
+var jsDlgLoader = 'https://www.nps.gov/subjects/concessions/loader.cfm';
+var jsSiteResourceLoader = 'https://www.nps.gov/cs-resources.cfm?r=';
+var jsSiteResourceSettings = {canCombine: false, canMinify: false};
+</script>
+<!-- end (4) JavaScript -->
+<!-- beg (5) CustomHead -->
+<!-- override ParkSite from Standard Template-->
+<meta charset="utf-8">
+<link href="https://www.nps.gov/common/commonspot/templates/images/icons/favicon.ico" rel="shortcut icon">
+<meta name="description" content="Search for a concessioner by service or park." />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--[if gt IE 8]>
+<script src="/common/commonspot/templates/assetsCT/javascripts/app.early.min.js?v=3hto-103g2dv"></script>
+<link href="/common/commonspot/templates/assetsCT/stylesheets/css/split-css/main.min.css?v=2rpz-n03cpj" media="screen, print" rel="stylesheet">
+<link href="/common/commonspot/templates/assetsCT/stylesheets/css/split-css/main-min-blessed1.css" media="screen, print" rel="stylesheet">
+<![endif]-->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<script src="/common/commonspot/templates/assetsCT/javascripts/app.early.min.js?v=3hto-103g2dv"></script>
+<link href="/common/commonspot/templates/assetsCT/stylesheets/css/split-css/main.min.css?v=2rpz-n03cpj" media="screen, print" rel="stylesheet">
+<link href="/common/commonspot/templates/assetsCT/stylesheets/css/split-css/main-min-blessed1.css" media="screen, print" rel="stylesheet">
+<![endif]-->
+<!--[if !IE]> -->
+<script src="https://www.nps.gov/common/commonspot/templates/assetsCT/javascripts/app.early.min.js?v=3hto-103g2dv"></script>
+<style>
+table#cs_idLayout2,
+table#cs_idLayout2 > tbody,
+table#cs_idLayout2 > tbody > tr,
+table#cs_idLayout2 > tbody > tr >  td
+{
+display: block;
+border-collapse:separate;
+}
+</style>
+<script src='https://www.nps.gov/common/commonspot/templates/js/federated-analytics-uav1.js?ver=true&agency=DOI&subagency=NPS&exts=rtf,odt,ods,odp&dclink=true&enhlink=true' id='_fed_an_ua_tag'></script>
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Authorized Concessioners Search - Concessions (U.S. National Park Service)" />
+<meta property="og:url" content="https://www.nps.gov/subjects/concessions/concessioners-search.htm" />
+<meta property="og:description" content="Search for a concessioner by service or park." />
+
+<!-- end (7) authormode_inlinestyles -->
+</head><body class="ParkSite"><span role="navigation" aria-label="Top of page" id="__topdoc__"></span>
+
+<div class="ContentHeader text-content-size">
+    <h1 class="page-title">Authorized Concessioners</h1>
+</div>
+
+<p id='showData'></p>
+
+<table>
+<tr>
+<td>Park Unit</td><td><span id="tdParkUnit">test</span></td>
+</tr>
+</table>
+
+    <script>
+        // JavaScript Document
+        jQuery(document).ready(function () {
+            // pause between steps until data load is complete
+            jQuery.ajaxSetup({
+                async: false
+            });
+            var reportSrc = "https://raw.githubusercontent.com/8BitCowboy/Temp200812/master/nsmap.geojson";
+            // arrays to store XML data
+            var parks = []; // stores parks included in xml
+            var uniqueParks = []; // subset of parks; unique only
+            var reportData;
+            // read XML file and store data in object arrays
+            jQuery.ajax({
+                type: "GET",
+                url: reportSrc,
+                dataType: "json",
+                success: function (json) {
+                    reportData = JSON.parse(JSON.stringify(json));
+                    console.log(reportData);
+                },
+                // on failure, show error message
+                error: function () {
+                    console.log("error");
+                }
+            });
+            // set initial selection in drop down list (if selection was made from previous page; if so, info in query string)
+            
+            jQuery.each(reportData.features, function(key, val){
+                if(val.properties.DNIGHT=="DEVA110129") {
+                    
+                    $("#tdParkUnit").text(val.properties.SITE_NAME);
+                    // Create a table.
+                    var table = document.createElement("table");
+
+
+                    // Create table header row using the extracted headers above.
+                    for(var i = 0; i < Object.keys(val.properties).length;i++) {
+                        
+                        tr = table.insertRow(-1);
+                        var tabCell = tr.insertCell(-1);
+                        tabCell.innerHTML = Object.keys(val.properties)[i];
+                        tabCell = tr.insertCell(-1);
+                        tabCell.innerHTML = Object.values(val.properties)[i];
+                    }
+
+                    var divShowData = document.getElementById('showData');
+                    divShowData.innerHTML = "";
+                    divShowData.appendChild(table);                    
+                }
+            })
+
+        });
+    </script>
+
+</body></html>
